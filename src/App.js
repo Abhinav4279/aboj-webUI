@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import {
   Button,
+  Card,
   FormControl,
   InputLabel,
   MenuItem,
@@ -18,6 +19,7 @@ import CodeEditor from "./components/CodeEditor";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Editor from "@monaco-editor/react";
 
 const darkTheme = createTheme({
   palette: {
@@ -30,6 +32,9 @@ function App() {
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
 
+  function handleEditorChange(value, event) {
+    setCode(value, event);
+  }
   const handleSubmit = async () => {
     const payload = {
       language,
@@ -72,7 +77,6 @@ function App() {
     py: "Python",
     asm: "Assembly",
   };
-
   const notifyLanguageChange = (lang) =>
     toast(`Language changed to ${codingLanguage[lang]}`);
   const notifyCodeEmpty = () =>
@@ -114,8 +118,11 @@ function App() {
         </div>
         <CodeEditor submitCode={setCode} result={output} />
         <br />
-        <p style={{ color: "white" }}>{output}</p>
-      </div>
+{/* 
+
+      {/* <br/> */}
+        {/* <p style={{ color: "white" }}>{output}</p> */}
+      </div> */}
     </ThemeProvider>
   );
 }

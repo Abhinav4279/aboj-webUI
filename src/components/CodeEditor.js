@@ -32,6 +32,7 @@ export default function CodeEditor(props) {
           defaultLanguage="yaml"
           theme="vs-dark"
           defaultValue={defaultValue}
+          value={props.result}
         />
       </Card>
     </div>
