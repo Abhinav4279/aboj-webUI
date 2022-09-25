@@ -21,7 +21,7 @@ const BASE_URL =
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
   },
 });
 
@@ -51,7 +51,7 @@ function App() {
           setOutput(errMsg);
         } else {
           setOutput(
-            "Some error occurred. Please check the speed and time complexity of your code."
+            `Some error occurred.\nHint: Check speed and time of your code.`
           );
         }
       }
@@ -79,9 +79,7 @@ function App() {
         <Navbar />
         <ToastContainer />
         <ToastContainer />
-        <Typography variant="h3" style={{ color: "white" }}>
-          Welcome to ABOJ
-        </Typography>
+        <Typography variant="h3">Welcome to ABOJ</Typography>
         <div>
           <FormControl style={{ width: "200px" }}>
             <InputLabel id="demo-simple-select-label">Language</InputLabel>
@@ -92,8 +90,7 @@ function App() {
               label="Language"
               onChange={setLanguageHelper}
             >
-              <MenuItem value={"cpp"}>C++</MenuItem>
-              <MenuItem value={"py"}>Python</MenuItem>
+              <MenuItem value={"cpp"}>C/C++</MenuItem>
               <MenuItem value={"asm"}>Assembly</MenuItem>
             </Select>
           </FormControl>
