@@ -14,10 +14,10 @@ import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
-
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import Editor from "@monaco-editor/react";
+
+const BASE_URL =
+  "https://d553-2409-4056-10a-d8c0-93d5-72da-4e18-cc0e.in.ngrok.io";
 
 const darkTheme = createTheme({
   palette: {
@@ -30,9 +30,6 @@ function App() {
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
 
-  // function handleEditorChange(value, event) {
-  //   setCode(value, event);
-  // }
   const handleSubmit = async () => {
     const payload = {
       language,
@@ -44,13 +41,9 @@ function App() {
     } else {
       try {
         setOutput("");
-        const { data } = await axios.post(
-          "http://localhost:5000/run",
-          payload,
-          {
-            timeout: 5000,
-          }
-        );
+        const { data } = await axios.post(`${BASE_URL}/run`, payload, {
+          timeout: 5000,
+        });
         setOutput(data.output);
       } catch ({ response }) {
         if (response) {
@@ -111,18 +104,12 @@ function App() {
             onClick={handleSubmit}
           >
             <PlayCircleFilledWhiteIcon />
-            RUN
+            Execute
           </Button>
         </div>
         <CodeEditor submitCode={setCode} result={output} />
         <br />
-{/* 
-
-      {/* <br/> */}
-        {/* <p style={{ color: "white" }}>{output}</p> */}
-      </div> 
-      */
-
+      </div>
     </ThemeProvider>
   );
 }
