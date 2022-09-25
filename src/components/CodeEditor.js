@@ -3,7 +3,7 @@ import Editor from "@monaco-editor/react";
 import { Card } from "@mui/material";
 
 export default function CodeEditor(props) {
-  function handleEditorChange(value, event) {
+  function handleEditorChange(value) {
     props.submitCode(value);
   }
 

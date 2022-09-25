@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import {
   Button,
-  Card,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
@@ -18,8 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Editor from "@monaco-editor/react";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import Editor from "@monaco-editor/react";
 
 const darkTheme = createTheme({
   palette: {
@@ -32,9 +30,9 @@ function App() {
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
 
-  function handleEditorChange(value, event) {
-    setCode(value, event);
-  }
+  // function handleEditorChange(value, event) {
+  //   setCode(value, event);
+  // }
   const handleSubmit = async () => {
     const payload = {
       language,
@@ -122,7 +120,9 @@ function App() {
 
       {/* <br/> */}
         {/* <p style={{ color: "white" }}>{output}</p> */}
-      </div> */}
+      </div> 
+      */
+
     </ThemeProvider>
   );
 }
