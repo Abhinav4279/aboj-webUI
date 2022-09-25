@@ -8,18 +8,31 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CodeEditor from "./components/CodeEditor";
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import Editor from "@monaco-editor/react";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function App() {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
 
+  // function handleEditorChange(value, event) {
+  //   setCode(value, event);
+  // }
   const handleSubmit = async () => {
     const payload = {
       language,
@@ -62,57 +75,55 @@ function App() {
     py: "Python",
     asm: "Assembly",
   };
-
   const notifyLanguageChange = (lang) =>
     toast(`Language changed to ${codingLanguage[lang]}`);
   const notifyCodeEmpty = () =>
     toast(`Write some code in ${codingLanguage[language]} first`);
 
   return (
-    <div className="App">
-      <Navbar />
-      <ToastContainer />
-      <ToastContainer />
-      <Typography variant="h3">Welcome to ABOJ</Typography>
-      <div>
-        <FormControl style={{ width: "200px" }}>
-          <InputLabel id="demo-simple-select-label">Language</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={language}
-            label="Language"
-            onChange={setLanguageHelper}
-          >
-            <MenuItem value={"cpp"}>C++</MenuItem>
-            <MenuItem value={"py"}>Python</MenuItem>
-            <MenuItem value={"asm"}>Assembly</MenuItem>
-          </Select>
-        </FormControl>
+    <ThemeProvider theme={darkTheme}>
+      <div className="App">
+        <Navbar />
+        <ToastContainer />
+        <ToastContainer />
+        <Typography variant="h3" style={{ color: "white" }}>
+          Welcome to ABOJ
+        </Typography>
+        <div>
+          <FormControl style={{ width: "200px" }}>
+            <InputLabel id="demo-simple-select-label">Language</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={language}
+              label="Language"
+              onChange={setLanguageHelper}
+            >
+              <MenuItem value={"cpp"}>C++</MenuItem>
+              <MenuItem value={"py"}>Python</MenuItem>
+              <MenuItem value={"asm"}>Assembly</MenuItem>
+            </Select>
+          </FormControl>
 
-        <Button
-          style={{ marginLeft: "10px", width: "200px", height: "56px" }}
-          variant="outlined"
-          onClick={handleSubmit}
-        >
-          <PlayCircleFilledWhiteIcon />
-          RUN
-        </Button>
-      </div>
-      <TextareaAutosize
-        maxRows={4}
-        aria-label="maximum height"
-        placeholder="Write code here"
-        defaultValue={code}
-        style={{ width: 1500, height: 400, marginTop: "20px" }}
-        onChange={(e) => {
-          setCode(e.target.value);
-        }}
-      />
-      <br />
-      {/* <button onClick={handleSubmit}>Submit</button> */}
-      <p>{output}</p>
-    </div>
+          <Button
+            style={{ marginLeft: "10px", width: "200px", height: "56px" }}
+            variant="outlined"
+            onClick={handleSubmit}
+          >
+            <PlayCircleFilledWhiteIcon />
+            RUN
+          </Button>
+        </div>
+        <CodeEditor submitCode={setCode} result={output} />
+        <br />
+{/* 
+
+      {/* <br/> */}
+        {/* <p style={{ color: "white" }}>{output}</p> */}
+      </div> 
+      */
+
+    </ThemeProvider>
   );
 }
 
