@@ -3,7 +3,7 @@
 ### Install dependencies
 
 ```bash
-npm i
+npm install
 ```
 ### Run the app
 
