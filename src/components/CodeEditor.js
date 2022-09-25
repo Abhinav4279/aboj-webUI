@@ -14,7 +14,7 @@ export default function CodeEditor(props) {
       <Card
         variant="outlined"
         style={{
-          width: "80%",
+          width: "70%",
         }}
         readOnly={true}
       >
@@ -27,7 +27,7 @@ export default function CodeEditor(props) {
         />
       </Card>
 
-      <Card variant="outlined" style={{ width: "20%" }}>
+      <Card variant="outlined" style={{ width: "30%" }}>
         <Editor
           defaultLanguage="yaml"
           theme="vs-dark"
