@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const BASE_URL = "http://159.89.172.217:5000";
+const BASE_URL = "http://localhost:5000";
 
 const darkTheme = createTheme({
   palette: {
@@ -28,6 +28,8 @@ function App() {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
+  const [status, setStatus] = useState('');
+  const [jobId, setJobId] = useState('');
 
   const handleSubmit = async () => {
     const payload = {
@@ -40,10 +42,35 @@ function App() {
     } else {
       try {
         setOutput("");
-        const { data } = await axios.post(`${BASE_URL}/run`, payload, {
-          timeout: 5000,
-        });
-        setOutput(data.output);
+        const { data } = await axios.post(`${BASE_URL}/run`, payload);
+        setJobId(data.jobId);
+        let intervalId;
+
+        console.log(data.jobId)
+        intervalId = setInterval(async () => {
+          const { data: dataRes } = await axios.get(`${BASE_URL}/status`,
+            { params: { id: data.jobId } });
+
+            const {success, job, error} = dataRes;
+            console.log(dataRes);
+
+            if(success) {
+              const {status: jobStatus, output: jobOutput} = job;
+              setStatus(jobStatus)
+              if(jobStatus === 'pending') return;
+              console.log(jobOutput)
+              setOutput(jobOutput);
+
+              clearInterval(intervalId);
+            }
+            else {
+              setStatus('Error occurred!');
+              console.log(error);
+              clearInterval(intervalId);
+              setOutput(error);
+            }
+          // console.log(dataRes);
+        }, 1000);
       } catch ({ response }) {
         if (response) {
           const errMsg = response.data.err.stderr;
@@ -103,8 +130,9 @@ function App() {
             Execute
           </Button>
         </div>
+        <p>{status}</p>
+        <p>{jobId && `JobID: ${jobId}`}</p>
         <CodeEditor submitCode={setCode} result={output} />
-        <br />
       </div>
     </ThemeProvider>
   );
