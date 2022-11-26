@@ -31,18 +31,17 @@ function App() {
   const [status, setStatus] = useState('');
   const [jobId, setJobId] = useState('');
 
-  let welcome = `While our team enable https connections.
-To try out our service please allow insecure content. We don't ask for any information.
-  -> Go to chrome settings.
-  -> Search 'insecure content'.
-  -> Go to site settings.
-  -> Additional content settings.
-  -> Insecure content.
-  -> Add < https://aboj.netlify.app/ > to allow list.
-*Don't enter sensitve information in code editor.
-  `
-
   useEffect(() => {
+    let welcome = `While our team enable https connections.
+    To try out our service please allow insecure content. We don't ask for any information.
+      -> Go to chrome settings.
+      -> Search 'insecure content'.
+      -> Go to site settings.
+      -> Additional content settings.
+      -> Insecure content.
+      -> Add < https://aboj.netlify.app/ > to allow list.
+    *Don't enter sensitve information in code editor.
+    `
     alert(welcome);
   }, []);
 
