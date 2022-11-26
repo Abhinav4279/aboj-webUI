@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import {
   Button,
@@ -30,6 +30,21 @@ function App() {
   const [language, setLanguage] = useState("cpp");
   const [status, setStatus] = useState('');
   const [jobId, setJobId] = useState('');
+
+  let welcome = `While our team enable https connections.
+To try out our service please allow insecure content. We don't ask for any information.
+  -> Go to chrome settings.
+  -> Search 'insecure content'.
+  -> Go to site settings.
+  -> Additional content settings.
+  -> Insecure content.
+  -> Add < https://aboj.netlify.app/ > to allow list.
+*Don't enter sensitve information in code editor.
+  `
+
+  useEffect(() => {
+    alert(welcome);
+  }, []);
 
   const handleSubmit = async () => {
     const payload = {
