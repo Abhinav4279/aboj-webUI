@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = process.env.REACT_APP_SERVER_URL;
 
 const darkTheme = createTheme({
   palette: {
