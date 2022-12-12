@@ -15,6 +15,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import moment from 'moment';
+
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -29,7 +31,8 @@ function App() {
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("cpp");
   const [status, setStatus] = useState('');
-  const [jobId, setJobId] = useState('');
+  const [result, setResult] = useState('');
+  const [jobDetails, setJobDetails] = useState(null);
 
   useEffect(() => {
     let welcome = `While our team enable https connections.
@@ -45,6 +48,26 @@ function App() {
     alert(welcome);
   }, []);
 
+  useEffect(() => {
+    if(!jobDetails)
+      return;
+
+    console.log(jobDetails);
+    let str = '';
+    let {submittedAt, completedAt, startedAt} = jobDetails;
+    submittedAt = moment(submittedAt).toString()
+    str += `Submitted At: ${submittedAt}`
+
+    if(completedAt || startedAt) {
+      const start = moment(startedAt)
+      const end = moment(completedAt)
+      const executionTime = end.diff(start, 'seconds', true)
+      str += ` Execution Time: ${executionTime}s`;
+    }
+
+    setResult(str);
+  }, [jobDetails]);
+
   const handleSubmit = async () => {
     const payload = {
       language,
@@ -56,23 +79,28 @@ function App() {
     } else {
       try {
         setOutput("");
+        setStatus("");
+        setJobDetails(null);
         const { data } = await axios.post(`${BASE_URL}/run`, payload);
-        setJobId(data.jobId);
         let intervalId;
 
-        console.log(data.jobId)
+        // console.log(data.jobId)
         intervalId = setInterval(async () => {
           const { data: dataRes } = await axios.get(`${BASE_URL}/status`,
             { params: { id: data.jobId } });
 
             const {success, job, error} = dataRes;
-            console.log(dataRes);
+            // console.log(dataRes);
 
             if(success) {
               const {status: jobStatus, output: jobOutput} = job;
               setStatus(jobStatus)
+              setJobDetails(job)
+              if(jobStatus === 'timeout')
+                setStatus('Time Limit Exceeded!')
+
               if(jobStatus === 'pending') return;
-              console.log(jobOutput)
+              // console.log(jobOutput)
               setOutput(jobOutput);
 
               clearInterval(intervalId);
@@ -145,7 +173,7 @@ function App() {
           </Button>
         </div>
         <p>{status}</p>
-        <p>{jobId && `JobID: ${jobId}`}</p>
+        <p>{result}</p>
         <CodeEditor submitCode={setCode} result={output} />
       </div>
     </ThemeProvider>
