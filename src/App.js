@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CodeEditor from "./components/CodeEditor";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import moment from 'moment';
+import snips from './snips'
 
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL;
@@ -51,9 +52,14 @@ Please enable insecure content to try the service.
   -> Additional content settings.
   -> Insecure content.
   -> Add < https://aboj.netlify.app/ > to allow list.`
+
   useEffect(() => {
     alert(welcome);
   }, [welcome]);
+
+  useEffect(() => {
+    setCode(snips[language]);
+  }, [language]);
 
   useEffect(() => {
     if(!jobDetails)
@@ -175,7 +181,7 @@ Please enable insecure content to try the service.
         </div>
         <p style={statusColorStyle}>{status}</p>
         <p>{result}</p>
-        <CodeEditor submitCode={setCode} result={output} />
+        <CodeEditor setCode={setCode} result={output} code={code}/>
       </div>
     </ThemeProvider>
   );
