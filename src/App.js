@@ -33,26 +33,32 @@ function App() {
   const [status, setStatus] = useState('');
   const [result, setResult] = useState('');
   const [jobDetails, setJobDetails] = useState(null);
+  
+  let statusColorStyle;
+  switch(status) {
+    case 'pending': statusColorStyle = {color: 'orange'};
+    break;
+    case 'success': statusColorStyle = {color: 'green'};
+    break;
+    default: statusColorStyle = {color: 'red'};
+  }
 
+let welcome = `While we enable https connections.
+Please enable insecure content to try the service.
+  -> Go to chrome settings.
+  -> Search 'insecure content'.
+  -> Go to site settings.
+  -> Additional content settings.
+  -> Insecure content.
+  -> Add < https://aboj.netlify.app/ > to allow list.`
   useEffect(() => {
-    let welcome = `While our team enable https connections.
-    To try out our service please allow insecure content. We don't ask for any information.
-      -> Go to chrome settings.
-      -> Search 'insecure content'.
-      -> Go to site settings.
-      -> Additional content settings.
-      -> Insecure content.
-      -> Add < https://aboj.netlify.app/ > to allow list.
-    *Don't enter sensitve information in code editor.
-    `
     alert(welcome);
-  }, []);
+  }, [welcome]);
 
   useEffect(() => {
     if(!jobDetails)
       return;
 
-    console.log(jobDetails);
     let str = '';
     let {submittedAt, completedAt, startedAt} = jobDetails;
     submittedAt = moment(submittedAt).toString()
@@ -62,7 +68,7 @@ function App() {
       const start = moment(startedAt)
       const end = moment(completedAt)
       const executionTime = end.diff(start, 'seconds', true)
-      str += ` Execution Time: ${executionTime}s`;
+      str += `  ---   Execution Time: ${executionTime}s`;
     }
 
     setResult(str);
@@ -84,13 +90,11 @@ function App() {
         const { data } = await axios.post(`${BASE_URL}/run`, payload);
         let intervalId;
 
-        // console.log(data.jobId)
         intervalId = setInterval(async () => {
           const { data: dataRes } = await axios.get(`${BASE_URL}/status`,
             { params: { id: data.jobId } });
 
             const {success, job, error} = dataRes;
-            // console.log(dataRes);
 
             if(success) {
               const {status: jobStatus, output: jobOutput} = job;
@@ -100,18 +104,15 @@ function App() {
                 setStatus('Time Limit Exceeded!')
 
               if(jobStatus === 'pending') return;
-              // console.log(jobOutput)
               setOutput(jobOutput);
 
               clearInterval(intervalId);
             }
             else {
               setStatus('Error occurred!');
-              console.log(error);
               clearInterval(intervalId);
               setOutput(error);
             }
-          // console.log(dataRes);
         }, 1000);
       } catch ({ response }) {
         if (response) {
@@ -172,7 +173,7 @@ function App() {
             Execute
           </Button>
         </div>
-        <p>{status}</p>
+        <p style={statusColorStyle}>{status}</p>
         <p>{result}</p>
         <CodeEditor submitCode={setCode} result={output} />
       </div>
