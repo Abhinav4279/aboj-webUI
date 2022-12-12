@@ -4,7 +4,7 @@ import { Card } from "@mui/material";
 
 export default function CodeEditor(props) {
   function handleEditorChange(value) {
-    props.submitCode(value);
+    props.setCode(value);
   }
 
   let defaultValue = "// output will be shown here";
@@ -23,7 +23,7 @@ export default function CodeEditor(props) {
           height="90vh"
           theme="vs-dark"
           defaultLanguage="yaml"
-          defaultValue="// write your code here"
+          value={props.code}
           onChange={handleEditorChange}
         />
       </Card>
