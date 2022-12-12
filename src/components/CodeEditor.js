@@ -8,6 +8,7 @@ export default function CodeEditor(props) {
   }
 
   let defaultValue = "// output will be shown here";
+  let wrapObj = {wordWrap: 'on'};
 
   return (
     <div style={{ display: "flex", marginTop: "20px" }}>
@@ -31,6 +32,7 @@ export default function CodeEditor(props) {
         <Editor
           defaultLanguage="yaml"
           theme="vs-dark"
+          options={wrapObj}
           defaultValue={defaultValue}
           value={props.result}
         />
