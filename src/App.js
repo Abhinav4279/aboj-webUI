@@ -44,19 +44,6 @@ function App() {
     default: statusColorStyle = {color: 'red'};
   }
 
-let welcome = `While we enable https connections.
-Please enable insecure content to try the service.
-  -> Go to chrome settings.
-  -> Search 'insecure content'.
-  -> Go to site settings.
-  -> Additional content settings.
-  -> Insecure content.
-  -> Add < https://aboj.netlify.app/ > to allow list.`
-
-  useEffect(() => {
-    alert(welcome);
-  }, [welcome]);
-
   useEffect(() => {
     setCode(snips[language]);
   }, [language]);
