@@ -4,7 +4,13 @@ snips.cpp = `#include <iostream>
 #include <stdio.h>
 using namespace std;
 
+int N = 1000;   //change value of N to see different status
+
 int main() {
+  for(int i = 0; i < N: i++) {
+    //delay
+  }
+
   cout << "Hello world!";
   return 0;
 }
