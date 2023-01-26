@@ -12,7 +12,11 @@ npm start
 ```
 
 ## Screenshots
-![Screenshot from 2022-11-26 22-23-43](https://user-images.githubusercontent.com/54229503/204100103-845a69b6-b833-4bb0-95d9-41bb68a0b06f.png)
+![Screenshot from 2023-01-26 16-29-12](https://user-images.githubusercontent.com/54229503/214820298-2cfbc562-d2a4-469e-b446-e59ac053f1ac.png)
+
 ---
 \
-![Screenshot from 2022-11-26 22-25-54](https://user-images.githubusercontent.com/54229503/204100113-bb6e3f03-ecc0-4e17-87ab-ca3ec03a53b2.png)
+![Screenshot from 2023-01-26 16-30-46](https://user-images.githubusercontent.com/54229503/214820328-e19770be-9833-464b-9b81-e505c4479611.png)
+---
+\
+![Screenshot from 2023-01-26 16-32-09](https://user-images.githubusercontent.com/54229503/214820357-9af3fed0-2960-442c-938b-8046111df675.png)
